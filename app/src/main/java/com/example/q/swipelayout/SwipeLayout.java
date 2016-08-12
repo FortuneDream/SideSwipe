@@ -6,12 +6,9 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 /**
  * Created by YQ on 2016/8/3.
@@ -28,8 +25,9 @@ public class SwipeLayout extends FrameLayout {
     private int mRange;
 
     public static enum Status {
-        Close, Open, Dragging;
+        Close, Open, Dragging
     }
+
 
     public Status getmStatus() {
         return mStatus;
@@ -126,8 +124,8 @@ public class SwipeLayout extends FrameLayout {
         if (listener != null) {
             listener.onDragging(this);
             Status preStatus = mStatus;//上一次
-            mStatus = updateStutas();
-            if (mStatus != preStatus ) {
+            mStatus = updateStatus();
+            if (mStatus != preStatus) {
                 //状态改变
                 if (mStatus == Status.Close) {
                     listener.onClose(this);
@@ -144,7 +142,7 @@ public class SwipeLayout extends FrameLayout {
         }
     }
 
-    private Status updateStutas() {
+    private Status updateStatus() {
         int left = mFrontView.getLeft();
         if (left == 0) {
             return Status.Close;
@@ -225,7 +223,6 @@ public class SwipeLayout extends FrameLayout {
         //根据前View，摆放后View
         Rect backRect = computeBackViewViaFront(frontRect);
         mBackView.layout(backRect.left, backRect.top, backRect.right, backRect.bottom);
-        //bringChildToFront(mFrontView);//把FrontView前置???
         //后View依赖前View
 
     }
